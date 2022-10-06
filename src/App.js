@@ -1,99 +1,87 @@
-import React from "react";
+import React, { useState } from "react";
+// import Categories from "./Categories";
 import "./styles.css";
-import { useState } from "react";
-const state = {
-  mumbai: [
-    { name: "marine line", rating: "4/5" },
-    { name: "gate way of india", rating: "4.5/5" },
-    { name: "bandstand", rating: "3.5/5" },
-    { name: "siddhivinayak mandir", rating: "5/5" }
-  ],
-  kolkata: [
-    {
-      name: "Eco park",
-      rating: "5/5"
-    },
-    {
-      name: "park street",
-      rating: "4.5/5"
-    },
-    {
-      name: "Howrah Bridge",
-      rating: "3/5"
-    }
-  ],
-  delhi: [
-    {
-      name: "akshardham",
-      rating: "3.5/5"
-    },
-    {
-      name: "India gate",
-      rating: "3/5"
-    },
-    {
-      name: "Iskon temple",
-      rating: "5/5"
-    },
-    {
-      name: "Red fort",
-      rating: "4/5"
-    }
-  ]
-};
 
-export default function App() {
-  const [selectedGenre, setGenre] = useState("business");
-  function genreClickHandler(genre) {
-    setGenre(genre);
+function App() {
+  // var [Cities, setCities] = useState("");
+  var [places, setPlaces] = useState("");
+
+  var cityCategories = {
+    mumbai: [
+      "marine line : 4/5",
+      "gate way of india : 4.5/5",
+      "bandstand : 3.5/5",
+      "siddhivinayak mandir : 5/5"
+    ],
+    kolkata: ["Eco park : 5/5", "park street : 4.5/5", "Howrah Bridge : 3/5"],
+    delhi: [
+      "akshardham : 3.5/5",
+      "India gate : 3/5",
+      "Iskon temple :5/5",
+      "Red fort : 4/5"
+    ]
+  };
+
+  var CitiesArray = Object.keys(cityCategories);
+
+  var citiesMapArray = CitiesArray.map((item) => {
+    return item;
+  });
+
+  function onCitiesClicked(item) {
+    var CitiesArray = cityCategories[item];
+
+    var PlaceArray = CitiesArray.map((place) => {
+      return place;
+    });
+    setPlaces(PlaceArray);
   }
+  var placesArray = [];
+  placesArray = places;
+
   return (
     <div className="App">
-      <h1> travel place </h1>
-      <p style={{ fontSize: "smaller" }}>
-        {" "}
-        Checkout my favorite travel place. Select a place to know about that
-        city{" "}
-      </p>
+      <h1 className="heading">Travel Places </h1>
+      <p>Checkout Tourist Places to Visit in Cities</p>
+      <div className="Categories">
+        <div>
+          {citiesMapArray.map((item) => {
+            return (
+              <button
+                onClick={() => onCitiesClicked(item)}
+                key={item}
+                style={{
+                  border: " 0.5px black solid",
+                  width: "6rem",
+                  borderRadius: "5px",
+                  backgroundColor: "#006eff",
+                  padding: "1rem",
+                  margin: "10px",
+                  cursor: "pointer"
+                }}
+              >
+                {item}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div className="Places">
+        <hr size="8" width="90%" color="#790050" />
+      </div>
 
-      <div>
-        {Object.keys(state).map((genre) => (
-          <button
-            onClick={() => genreClickHandler(genre)}
-            style={{
-              cursor: "pointer",
-              background: "#E5E7EB",
-              borderRadius: "0.5rem",
-              padding: "0.5rem  1rem",
-              border: "1px solid black",
-              margin: "1rem 0.3rem"
-            }}
-          >
-            {genre}
-          </button>
-        ))}
-      </div>
-      <hr />
-      <div style={{ textAlign: "left" }}>
-        <ul style={{ paddingInlineStart: "0" }}>
-          {state[selectedGenre].map((place) => (
-            <li
-              key={place.name}
-              style={{
-                listStyle: "none",
-                padding: "1rem",
-                border: "1px solid #D1D5DB",
-                width: "70%",
-                margin: "1rem 0rem",
-                borderRadius: "0.5rem"
-              }}
-            >
-              <div style={{ fontSize: "larger" }}> {place.name} </div>
-              <div style={{ fontSize: "smaller" }}> {place.rating} </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul>
+        {Object.values(places).map((place) => {
+          return (
+            <div className="placeContainer" key={place}>
+              <li key={place} style={{ color: "black" }}>
+                {place}
+              </li>
+            </div>
+          );
+        })}
+      </ul>
     </div>
   );
 }
+export default App;
